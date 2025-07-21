@@ -1,15 +1,53 @@
-<!DOCTYPE html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>mObywatel 2.0</title><link rel="shortcut icon" href="images/mobywatellogo.svg" type="image/x-icon"><meta name="theme-color" content="#F5F6FB"><meta name="next-head-count" content="5"><meta name="apple-mobile-web-app-capable" content="yes"><script src="js/sw.js"></script><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="assets/manifest.json"><link href="https://fonts.googleapis.com/css?family=Inter" rel="stylesheet"><meta name="format-detection" content="telephone=no"><meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><script>
-        window.addEventListener("load", function() {
-    if ("standalone" in window.navigator && window.navigator.standalone) {
-        var a = document.getElementsByTagName("a");
-        for (var i = 0; i < a.length; i++) {
-            a[i].addEventListener("click", function(event) {
-                var newLocation = this.href;
-                event.preventDefault();
-                window.location = newLocation;
-            }, false);
-        }
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <!-- Viewport - tylko jeden poprawnie skonfigurowany -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>mObywatel 2.0</title>
+
+  <!-- Ikona i motyw -->
+  <link rel="shortcut icon" href="images/mobywatellogo.svg" type="image/x-icon">
+  <link rel="apple-touch-icon" href="images/icon-192x192.png"> <!-- ważne dla iOS! -->
+  <meta name="theme-color" content="#F5F6FB">
+
+  <!-- Web App na iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- Manifest i czcionki -->
+  <link rel="manifest" href="assets/manifest.json">
+  <link href="https://fonts.googleapis.com/css?family=Inter" rel="stylesheet">
+
+  <!-- Service Worker -->
+  <script>
+    if (location.protocol === 'http:') location.protocol = 'https:';
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('assets/sw.js')
+        .then(reg => console.log('Service Worker registered:', reg))
+        .catch(err => console.error('Service Worker not registered:', err));
     }
+  </script>
+
+  <!-- standalone iOS navigation fix -->
+  <script>
+    window.addEventListener("load", function () {
+      if ("standalone" in window.navigator && window.navigator.standalone) {
+        var links = document.getElementsByTagName("a");
+        for (var i = 0; i < links.length; i++) {
+          links[i].addEventListener("click", function (event) {
+            event.preventDefault();
+            window.location = this.href;
+          }, false);
+        }
+      }
+    });
+  </script>
+</head>
+
     
     setTimeout(function() {
         window.scrollTo(0, 1);
