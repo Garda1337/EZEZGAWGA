@@ -1,48 +1,14 @@
-<head> 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#F5F6FB">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="format-detection" content="telephone=no">
-
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="images/icon-192x192.png">
-  <link rel="shortcut icon" href="images/mobywatellogo.svg" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css?family=Inter" rel="stylesheet">
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('js/sw.js')
-        .then(reg => console.log('SW OK', reg))
-        .catch(err => console.error('SW FAIL', err));
+<html><head><script>
+    if(location.protocol == 'http:') location.protocol = 'https:';
+    if('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('assets/sw.js')
+        .then(reg => console.log('Service Worker registered', reg))
+        .catch(err => console.error('Service Worker **not** registered', err));
     }
+    else {
+      console.warn('Service Worker not supported in this browser');
+    }    
   </script>
-
-
-  <!-- Podstawowe meta tagi viewport -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-  <!-- Kodowanie -->
-  <meta charset="utf-8">
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-
-  <!-- Ustawienie koloru paska statusu i tła -->
-  <meta name="theme-color" content="#FFFFFF">
-
-  <!-- Najważniejsze: aby uruchomić w trybie Web App na iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <!-- Opcjonalnie styl paska statusu: default, black lub black-translucent -->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-  <!-- Ikona dla "dodaj do ekranu głównego" -->
-  <link rel="apple-touch-icon" href="images/icon-192x192.png">
-
-  <!-- Manifest dla PWA -->
-  <link rel="manifest" href="assets/manifest.json">
-
-  <title>mObywatel 2.0</title>
-</head>
 
     <script src="js/sw.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
