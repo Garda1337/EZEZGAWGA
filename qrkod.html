@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="pl"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kod QR</title>
+  <script src="js/qrcode.min.js"></script>
+  <style>
+    /* Używamy czcionek typowych dla iOS i nowoczesnych systemów */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    .back {
+      text-align: left;
+      margin-bottom: 10px;
+    }
+    .back a {
+      text-decoration: none;
+      color: #005bb5;
+      font-size: 16px;
+    }
+    h2 {
+      margin: 10px 0;
+      font-size: 22px;
+      color: #333;
+    }
+    p {
+      font-size: 16px;
+      margin: 10px 0;
+      color: #444;
+    }
+    /* Wyśrodkowanie kodu QR */
+    #qrcode {
+      margin: 20px auto;
+      display: inline-block;
+    }
+    #random-code {
+      font-size: 32px;
+      font-weight: bold;
+      margin: 20px 0;
+      letter-spacing: 2px;
+      color: #222;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 5px;
+      background: #bbb;
+      margin: 10px 0;
+      position: relative;
+      border-radius: 2.5px;
+      overflow: hidden;
+    }
+    .progress {
+      height: 100%;
+      background: #005bb5;
+      width: 100%;
+      transition: width 180s linear;
+    }
+    /* Dostosowanie wyglądu na urządzeniach mobilnych */
+    @media only screen and (max-width: 480px) {
+      .container {
+        padding: 15px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+      p {
+        font-size: 14px;
+      }
+      #random-code {
+        font-size: 28px;
+      }
+      .back a {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="back">
+      <a href="qr2.html">← Kod QR</a>
+    </div>
+    <h2>Kod QR</h2>
+    <p>Pokaż kod QR osobie, której dokument sprawdzasz</p>
+    <p>Gdy ta osoba zeskanuje lub przepisze kod, zobaczysz jej dane na swoim telefonie.</p>
+    <div id="qrcode"></div>
+    <h1 id="random-code"></h1>
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+    <p>Kod wygaśnie za: <span id="countdown">3 min 00 sek.</span></p>
+  </div>
+
+  <script>
+    function generateRandomCode() {
+      return Math.floor(100000 + Math.random() * 900000);
+    }
+
+    function startCountdown(duration) {
+      let timeRemaining = duration;
+      let countdownElement = document.getElementById("countdown");
+      let progressElement = document.getElementById("progress");
+      progressElement.style.width = "100%";
+      
+      let interval = setInterval(() => {
+        let minutes = Math.floor(timeRemaining / 60);
+        let seconds = timeRemaining % 60;
+        countdownElement.textContent = `${minutes} min ${seconds < 10 ? "0" : ""}${seconds} sek.`;
+        
+        let percentage = (timeRemaining / duration) * 100;
+        progressElement.style.width = percentage + "%";
+        
+        if (timeRemaining <= 0) {
+          clearInterval(interval);
+          countdownElement.textContent = "Kod wygasł";
+        }
+        timeRemaining--;
+      }, 1000);
+    }
+
+    const randomCode = generateRandomCode();
+    document.getElementById("random-code").textContent = randomCode;
+    new QRCode(document.getElementById("qrcode"), "https://example.com?id=" + generateRandomCode());
+    startCountdown(180);
+  </script>
+
+
+</body></html>
